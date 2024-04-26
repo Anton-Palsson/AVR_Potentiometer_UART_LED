@@ -8,7 +8,7 @@
 
 #define SERIAL_8N1 ((1 << UCSZ00) | (1 << UCSZ01))
 #define LED_PIN (1 << PD3)
-#define F_CPU 16000000UL // Microcontroller's frequency in Hz
+#define F_CPU 16000000UL // Micro
 #define BAUD 9600 // Desired baud rate
 
 uint16_t val = (ADCL | (ADCH << 8));
@@ -30,12 +30,12 @@ void potentiometerRun() {
 
     float voltage = (adc_value * 5.0) / 1023.0;
 
-    // Print ADC value and voltage via UART
+    
     uart_print_uint16(adc_value);
 
-    uartTransmit(' '); // Separate ADC value and voltage with a space
+    uartTransmit(' '); 
 
-    uart_print_uint16((uint16_t)(voltage * 1000)); // Print voltage in millivolts
+    uart_print_uint16((uint16_t)(voltage * 1000)); 
 
     uartTransmit('\n'); // Newline
 
@@ -43,10 +43,10 @@ void potentiometerRun() {
 }
 
 void uartTransmit(uint8_t data) {
-    // Wait for empty transmit buffer
+
     while (!(UCSR0A & (1 << UDRE0)));
 
-    // Put data into buffer, sends the data
+    // 
     UDR0 = data;
 }
 
@@ -67,7 +67,6 @@ uint16_t readADC() {
     // Start ADC
     ADCSRA |= (1 << ADSC);
 
-    // Wait for conversion to complete
     while (ADCSRA & (1 << ADSC));
 
     // Read ADC value
