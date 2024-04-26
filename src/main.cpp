@@ -1,18 +1,24 @@
-#include <Arduino.h>
+#include <avr/io.h>
+#include <stdio.h>
+#include <string.h>
+#include <util/delay.h>
+#include <avr/interrupt.h>
+#include <setup.h>
 
-// put function declarations here:
-int myFunction(int, int);
+int main() {
+    interruptSetup();
+    
+    uartInit();
+    
+    initADC();
+    
+    sei();
 
-void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
-}
+    while (1) {
+        // ADC/UART
+        potentiometerRun();
+        _delay_ms(1000);
+    }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+    return 0;
 }
